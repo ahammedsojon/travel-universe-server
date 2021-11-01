@@ -25,14 +25,11 @@ async function run() {
         app.get('/services', async (req, res) => {
             const cursor = packageCollection.find({});
             const result = await cursor.toArray();
-            // console.log(result)
             res.send(result);
         })
         app.get('/orders', async (req, res) => {
             const cursor = orderCollection.find({});
             const result = await cursor.toArray();
-            // console.log('hitting orders')
-            // console.log('hitting orders', result)
             res.send(result);
         })
         app.get('/orders/:id', async (req, res) => {
@@ -47,7 +44,6 @@ async function run() {
         // POST API
         app.post('/orders', async (req, res) => {
             const order = req.body.data;
-            // console.log('hitting post', order)
             const result = await orderCollection.insertOne(order);
             res.json(result);
         })
@@ -55,18 +51,13 @@ async function run() {
             const service = req.body.data;
             console.log('hitting post', service)
             const result = await packageCollection.insertOne(service);
-            // console.log(result)
             res.json(result);
         })
         app.post('/orders/byid', async (req, res) => {
             const orders = req.body.storeOrder;
             const ids = orders.map(od => ObjectId(od));
-            // console.log('objectId', ids)
-            // console.log('hitting the post', orders);
             const query = { _id: { $in: ids } };
             const result = await packageCollection.find(query).toArray();
-            // console.log('hitting post', ids)
-            // console.log(result)
             res.json(result);
         })
         // DELETE API
@@ -104,7 +95,7 @@ async function run() {
 run().catch(console.dir);
 
 app.get('/', (req, res) => {
-    res.send('Node server is running');
+    res.send('Travel agency node server is running');
 })
 
 app.listen(port, () => {
